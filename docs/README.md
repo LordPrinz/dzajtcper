@@ -451,13 +451,13 @@ dzajtcper/
 - BCC (Berkeley Packet Filter Compiler Collection)
 - Python packages: pandas, matplotlib, seaborn, plotly, numpy
 
-## � Documentation
+## 📚 Documentation
 
 - **[QUICK_START.md](./QUICK_START.md)** - Complete guide to HTML reports and quick analysis
 - **[CHEAT_SHEET.md](./CHEAT_SHEET.md)** - Command reference and examples
 - **[install.sh](./install.sh)** - Automatic installation script
 - **[run.sh](./run.sh)** - Unified command interface
 
-## �📝 License
+## 📝 License
 
 MIT License - see LICENSE file for details.
