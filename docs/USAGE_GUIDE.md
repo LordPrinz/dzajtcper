@@ -1,7 +1,9 @@
-# TCP CWND Monitor - Przewodnik użytkownika
+# DZAJTCPER - Przewodnik użytkownika
 
 ## Opis
-TCP CWND Monitor to zaawansowane narzędzie do monitorowania okna przesyłania (congestion window) z algorytmu Cubic bezpośrednio z jądra Linux za pomocą eBPF. Program oferuje unified command interface przez single `./run.sh` script z automatycznym zarządzaniem uprawnieniami.
+# 🚀 Co to jest DZAJTCPER?
+
+DZAJTCPER to zaawansowane narzędzie do monitorowania okna przesyłania (congestion window) z algorytmu Cubic bezpośrednio z jądra Linux za pomocą eBPF. Program oferuje unified command interface przez single `./run.sh` script z automatycznym zarządzaniem uprawnieniami.
 
 ## Wymagania systemowe
 - **System**: Linux z jądrem obsługującym eBPF (>= 4.7)

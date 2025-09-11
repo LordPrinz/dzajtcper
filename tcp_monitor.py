@@ -10,7 +10,6 @@ import os
 import signal
 from pathlib import Path
 
-# Add src directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from src.data_loader import DataLoader
@@ -24,18 +23,16 @@ class TCPMonitorCLI:
     """Main CLI class for TCP CWND monitoring"""
     
     def __init__(self):
-        # Import log manager
         from src.log_manager import LogManager
         
         self.log_manager = LogManager()
-        self.csv_file = None  # Will be set when needed for monitoring
+        self.csv_file = None
         self.ebpf_script = "tcp_cwnd_monitor.py"
         
     def run_ebpf_monitor(self, duration=None):
         """Start eBPF monitoring"""
         print("Starting eBPF TCP CWND monitoring...")
         
-        # Create new log file only when starting monitoring
         self.csv_file = self.log_manager.get_new_log_path()
         
         if not os.path.exists(self.ebpf_script):
@@ -48,7 +45,6 @@ class TCPMonitorCLI:
             
             if duration:
                 print(f"Monitoring for {duration} seconds...")
-                # Run with timeout, pass CSV file path as argument
                 result = subprocess.run(
                     [sys.executable, self.ebpf_script, self.csv_file],
                     timeout=duration,
@@ -56,7 +52,6 @@ class TCPMonitorCLI:
                 )
             else:
                 print("Monitoring indefinitely... Press Ctrl+C to stop")
-                # Run indefinitely, pass CSV file path as argument
                 result = subprocess.run(
                     [sys.executable, self.ebpf_script, self.csv_file],
                     capture_output=False
@@ -204,8 +199,6 @@ class TCPMonitorCLI:
             print(f"✓ Charts generated successfully in {charts_path}")
         else:
             print("⚠ Some charts could not be generated")
-        
-        return True
         
         print("\n=== QUICK STATISTICS ===")
         print(f"Total Records: {len(data):,}")

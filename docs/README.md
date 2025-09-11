@@ -1,4 +1,4 @@
-# TCP CWND Monitor & Analyzer
+# DZAJTCPER - TCP CWND Monitor & Analyzer
 
 Comprehensive TCP congestion window monitoring and analysis toolkit using eBPF for kernel-level monitoring with advanced filtering, visualization, and reporting capabilities.
 
@@ -33,7 +33,7 @@ pip3 install pandas matplotlib seaborn plotly numpy
 
 ```bash
 git clone <repository>
-cd tcp-sniffer
+cd dzajtcper
 chmod +x install.sh
 ./install.sh
 ```
@@ -42,7 +42,7 @@ chmod +x install.sh
 
 ```bash
 git clone <repository>
-cd tcp-sniffer
+cd dzajtcper
 chmod +x *.py *.sh
 ```
 
@@ -369,7 +369,7 @@ pgrep nginx
 ### Modular Structure
 
 ```
-tcp-sniffer/
+dzajtcper/
 ├── run.sh                  # 🎯 Unified command interface
 ├── tcp_monitor.py          # 🔧 Core monitoring engine  
 ├── src/                    # 📦 Core modules

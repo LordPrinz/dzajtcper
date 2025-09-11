@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Skrypt instalacji dla TCP CWND Monitor
-# Wymaga uprawnień sudo
-
 echo "=== Instalacja zależności systemowych dla BCC ==="
 
 # Sprawdź dystrybucję

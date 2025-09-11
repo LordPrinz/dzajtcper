@@ -1,8 +1,7 @@
 #!/bin/bash
-# uninstall.sh - Remove TCP CWND Monitor environment and dependencies (Python only)
+# uninstall.sh - Remove DZAJTCPER environment and dependencies (Python only)
 set -e
 
-# Remove Python virtual environment
 if [ -d "venv" ]; then
     echo "Removing Python virtual environment..."
     rm -rf venv

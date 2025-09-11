@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TCP CWND Monitor - Main Control Script
+# DZAJTCPER - Main Control Script
 # Unified interface for all monitoring and analysis operations
 
 set -e
@@ -16,9 +16,8 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Help function
 show_help() {
-    echo -e "${CYAN}TCP CWND Monitor - Unified Control Script${NC}"
+    echo -e "${CYAN}DZAJTCPER - Unified Control Script${NC}"
     echo ""
     echo -e "${YELLOW}USAGE:${NC}"
     echo "  ./run.sh <command> [options]"
@@ -64,7 +63,6 @@ show_help() {
     echo "  ./run.sh report analysis_report.html"
 }
 
-# Check if user needs help
 if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
     show_help
     exit 0
@@ -73,21 +71,18 @@ fi
 COMMAND="$1"
 shift
 
-# Handle commands
 case "$COMMAND" in
     "monitor")
         echo -e "${GREEN}🔍 Starting TCP CWND monitoring...${NC}"
         if [[ "$1" == "--duration" ]]; then
             echo -e "${YELLOW}Duration: $2 seconds${NC}"
             sudo ./tcp_monitor.py monitor --duration "$2"
-            # Fix permissions after monitoring
             if [[ -d "out" ]]; then
                 sudo chown -R "$USER:$USER" out/
             fi
         else
             echo -e "${YELLOW}Monitoring indefinitely (Ctrl+C to stop)${NC}"
             sudo ./tcp_monitor.py monitor "$@"
-            # Fix permissions after monitoring
             if [[ -d "out" ]]; then
                 sudo chown -R "$USER:$USER" out/
             fi
@@ -96,7 +91,6 @@ case "$COMMAND" in
         
     "analyze")
         echo -e "${GREEN}📊 Analyzing TCP CWND data...${NC}"
-        # Fix permissions before analysis if needed
         if [[ -d "out" ]]; then
             sudo chown -R "$USER:$USER" out/ 2>/dev/null || true
         fi
@@ -131,7 +125,6 @@ case "$COMMAND" in
         echo -e "${YELLOW}Step 1: Monitoring for $DURATION seconds...${NC}"
         sudo ./tcp_monitor.py monitor --duration "$DURATION"
         
-        # Fix permissions after monitoring
         if [[ -d "out" ]]; then
             sudo chown -R "$USER:$USER" out/
         fi
@@ -152,7 +145,6 @@ case "$COMMAND" in
             REPORT_FILE="tcp_analysis_$(date +%Y%m%d_%H%M%S).html"
         fi
         
-        # Fix permissions before analysis if needed
         if [[ -d "out" ]]; then
             sudo chown -R "$USER:$USER" out/ 2>/dev/null || true
         fi

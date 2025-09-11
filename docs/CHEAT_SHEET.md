@@ -1,4 +1,4 @@
-# TCP CWND Monitor - Cheat Sheet
+# DZAJTCPER - Cheat Sheet
 
 ## 🚀 NAJWAŻNIEJSZE KOMENDY
 
