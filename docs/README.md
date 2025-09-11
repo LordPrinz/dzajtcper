@@ -10,8 +10,9 @@ Comprehensive TCP congestion window monitoring and analysis toolkit using eBPF f
 - **Advanced filtering** by PID, addresses, ports, CWND ranges
 - **Multiple chart types** (timeline, connections, heatmap, overview)
 - **Interactive HTML reports** with Plotly visualization
+- **Comprehensive HTML analysis reports** with embedded charts and statistics
 - **Live monitoring** with real-time updates
-- **Comprehensive reporting** in text, JSON, and HTML formats
+- **Multiple report formats** (text, JSON, HTML)
 - **Automatic session management** with cleanup functionality
 - **Historical analysis** of previously collected data
 - **Automatic permission handling** for seamless operation
@@ -56,17 +57,21 @@ All TCP CWND data is automatically organized in session directories with unified
 out/
 ├── session_20250911_143025/
 │   ├── cwnd_log.csv                         # 📊 Raw TCP monitoring data
-│   ├── analysis_20250911_143225_timeline.png       # 📈 Timeline chart
-│   ├── analysis_20250911_143225_connections.png    # 🔗 Connection analysis
-│   ├── analysis_20250911_143225_heatmap.png        # 🌡️ Traffic heatmap
-│   ├── analysis_20250911_143225_timeline_interactive.html  # 🎯 Interactive charts
-│   ├── analysis_20250911_145030_timeline.png       # 📈 Second analysis (filtered)
-│   └── analysis_20250911_145030_connections.png    # 🔗 Filtered analysis
+│   ├── charts/
+│   │   ├── chart_20250911_143225_timeline.png       # 📈 Timeline chart
+│   │   ├── chart_20250911_143225_connections.png    # 🔗 Connection analysis
+│   │   ├── chart_20250911_143225_heatmap.png        # 🌡️ Traffic heatmap
+│   │   ├── chart_20250911_143225_timeline_interactive.html  # 🎯 Interactive charts
+│   │   └── tcp_analysis_20250911_143225.html        # 📋 Comprehensive HTML report
+│   └── analysis_20250911_145030/            # � Alternative analysis folder
+│       ├── chart_20250911_145030_timeline.png       # 📈 Filtered analysis
+│       └── chart_20250911_145030_connections.png    # 🔗 Filtered analysis
 ├── session_20250911_145123/
 │   └── cwnd_log.csv                         # 📊 Session with data only
 └── session_20250911_150245/
     ├── cwnd_log.csv                         # 📊 Raw data
-    └── analysis_*_...                       # 📈 Multiple analysis files
+    ├── charts/                              # 📈 Quick analysis charts + HTML report
+    └── analysis_*_...                       # 📈 Additional analysis files
 ```
 
 ### Session Commands
@@ -87,15 +92,24 @@ out/
 ./run.sh analyze                  # Analyze latest session
 ```
 
-### 2. Monitor and analyze in one command
+### 2. Monitor and analyze in one command with HTML report
 ```bash
-./run.sh quick --duration 60      # Monitor + analyze automatically
+./run.sh quick --duration 60      # Monitor + analyze + generate HTML report automatically
 ```
+
+**📋 HTML Report Features:**
+- 📊 Complete statistics (connections, processes, CWND analysis)  
+- 📈 Embedded interactive charts
+- 🔗 Connection analysis tables
+- 📡 Per-process activity breakdown
+- **Location:** `out/session_*/charts/tcp_analysis_*.html`
 
 ### 3. Generate comprehensive report
 ```bash
 ./run.sh report                   # Generate HTML report from latest session
 ```
+
+**🚀 Pro tip:** See [QUICK_START.md](./QUICK_START.md) for complete HTML report guide!
 
 ## 💡 Usage Examples
 
@@ -164,14 +178,14 @@ out/
 ### Quick Start (All-in-One)
 
 ```bash
-# Quick monitoring: collect data + analyze + generate HTML report
+# Quick monitoring: collect data + analyze + generate charts + HTML report
 ./run.sh quick --duration 60
 
 # What Quick Start does:
 # 1. Monitors TCP connections for specified duration (default: 60s)
 # 2. Automatically analyzes collected data  
 # 3. Generates overview charts (timeline, connections, heatmap)
-# 4. Creates comprehensive HTML report
+# 4. Creates comprehensive HTML analysis report in charts folder
 # 5. Shows quick statistics summary
 ```
 
@@ -210,7 +224,7 @@ out/
 | `monitor` | Start eBPF monitoring | `./run.sh monitor --duration 60` |
 | `analyze` | Analyze existing data | `./run.sh analyze --dport 443` |
 | `live` | Live monitoring dashboard | `./run.sh live --duration 60` |
-| `quick` | Monitor + analyze + HTML report | `./run.sh quick --duration 30` |
+| `quick` | Monitor + analyze + charts + HTML report | `./run.sh quick --duration 30` |
 | `report` | Generate comprehensive report | `./run.sh report` |
 | `list` | List all sessions | `./run.sh list` |
 | `clean` | Clean empty sessions | `./run.sh clean` |
@@ -437,6 +451,13 @@ dzajtcper/
 - BCC (Berkeley Packet Filter Compiler Collection)
 - Python packages: pandas, matplotlib, seaborn, plotly, numpy
 
-## 📝 License
+## � Documentation
+
+- **[QUICK_START.md](./QUICK_START.md)** - Complete guide to HTML reports and quick analysis
+- **[CHEAT_SHEET.md](./CHEAT_SHEET.md)** - Command reference and examples
+- **[install.sh](./install.sh)** - Automatic installation script
+- **[run.sh](./run.sh)** - Unified command interface
+
+## �📝 License
 
 MIT License - see LICENSE file for details.

@@ -1,137 +1,137 @@
-# DZAJTCPER - Cheat Sheet
+# TCP CWND Monitor - Cheat Sheet
 
-## 🚀 MOST IMPORTANT COMMANDS
+## 🚀 NAJWAŻNIEJSZE KOMENDY
 
-### Quick Start (Recommended)
+### Szybki start (Rekomendowany)
 ```bash
 ./run.sh monitor --duration 30      # Monitor 30s (auto-sudo)
-./run.sh analyze                    # Analyze latest session
+./run.sh analyze                    # Analiza najnowszej sesji
 ```
 
-### Quick mode (monitoring + analysis in one command)
+### Quick mode (monitoring + analiza + HTML report w jednej komendzie)
 ```bash
-./run.sh quick --duration 30       # Monitor + analysis + charts
+./run.sh quick --duration 30       # Monitor + analiza + wykresy + HTML report
 ```
 
-### Analysis of previous sessions
+### Analiza wcześniejszych sesji
 ```bash
-./run.sh list                       # List all sessions
-./run.sh analyze session_20250911_143025  # Specific session
+./run.sh list                       # Lista wszystkich sesji
+./run.sh analyze session_20250911_143025  # Konkretna sesja
 ```
 
-## 📋 MAIN COMMANDS
+## 📋 GŁÓWNE KOMENDY
 
-| Command | Description | Example |
-|---------|-------------|---------|
+| Komenda | Opis | Przykład |
+|---------|------|----------|
 | `monitor` | 🎯 eBPF monitoring | `./run.sh monitor --duration 60` |
-| `analyze` | 📊 Data analysis | `./run.sh analyze --dport 443` |
+| `analyze` | 📊 Analiza danych | `./run.sh analyze --dport 443` |
 | `live` | 📺 Live monitoring | `./run.sh live --duration 60` |
-| `quick` | ⚡ Monitor + analysis + HTML report | `./run.sh quick --duration 30` |
+| `quick` | ⚡ Monitor + analiza + HTML report | `./run.sh quick --duration 30` |
 | `report` | 📄 Comprehensive report | `./run.sh report` |
-| `list` | 📋 List sessions | `./run.sh list` |
-| `clean` | 🧹 Remove empty sessions | `./run.sh clean` |
+| `list` | 📋 Lista sesji | `./run.sh list` |
+| `clean` | 🧹 Usuń puste sesje | `./run.sh clean` |
 
-## 🔧 FILTERING OPTIONS
+## 🔧 OPCJE FILTROWANIA
 
-### Basic filters
+### Podstawowe filtry
 ```bash
-# By process (PID)
+# Por proces (PID)
 ./run.sh analyze --pid 1234
 
-# By destination port (e.g. HTTPS)
+# Por port docelowy (np. HTTPS)
 ./run.sh analyze --dport 443
 
-# By source port (e.g. SSH)
+# Por port źródłowy (np. SSH)
 ./run.sh analyze --sport 22
 
-# By IP address
+# Por adres IP
 ./run.sh analyze --saddr 192.168.1.100
 ./run.sh analyze --daddr 10.0.0.1
 
-# By CWND range
+# Por zakres CWND
 ./run.sh analyze --cwnd-min 10 --cwnd-max 100
 ```
 
-### Complex filters
+### Złożone filtry
 ```bash
-# HTTPS with high CWND
+# HTTPS z wysokim CWND
 ./run.sh analyze --dport 443 --cwnd-min 50
 
-# SSH from specific IP
+# SSH od konkretnego IP
 ./run.sh analyze --sport 22 --saddr 192.168.1.*
 
-# Specific process with selected charts
+# Konkretny proces z wybranymi wykresami
 ./run.sh analyze --pid 1234 --charts timeline connections
 ```
 
-## 📊 CHART TYPES
+## 📊 TYPY WYKRESÓW
 
-| Type | Description | Usage |
-|------|-------------|-------|
-| `timeline` | 📈 CWND evolution over time | Main performance chart |
-| `connections` | 🔗 Connection analysis | Compare connections |
-| `heatmap` | 🌡️ Activity heatmap | Pattern identification |
-| `overview` | 📋 Statistics | Quick overview |
+| Typ | Opis | Użycie |
+|-----|------|--------|
+| `timeline` | 📈 Ewolucja CWND w czasie | Główny wykres wydajności |
+| `connections` | 🔗 Analiza połączeń | Porównanie połączeń |
+| `heatmap` | 🌡️ Mapa aktywności | Identyfikacja wzorców |
+| `overview` | 📋 Statystyki | Szybki przegląd |
 
-### Chart Examples
+### Przykłady wykresów
 ```bash
-# Single chart
+# Pojedynczy wykres
 ./run.sh analyze --charts timeline
 
-# Selected charts  
+# Wybrane wykresy  
 ./run.sh analyze --charts timeline connections
 
-# All charts (default)
+# Wszystkie wykresy (domyślnie)
 ./run.sh analyze
 ```
 
-## 📄 REPORTS
+## 📄 RAPORTY
 
 ### Comprehensive reports
 ```bash
-# Main HTML report (with charts)
+# Główny raport HTML (z wykresami)
 ./run.sh report
 
-# Report from specific session
+# Raport z konkretnej sesji
 ./run.sh report session_20250911_143025
 
-# Report with custom name
+# Raport z custom nazwą
 ./run.sh report session_20250911_143025 my_analysis.html
 ```
 
-## 🎯 TYPICAL SCENARIOS
+## 🎯 TYPOWE SCENARIUSZE
 
-### 1. Quick problem diagnosis
+### 1. Szybka diagnoza problemu z HTML reportem
 ```bash
 ./run.sh quick --duration 30
-# Check out/session_*/ for results
+# Sprawdź out/session_*/charts/ dla wykresów i HTML reportu
 ```
 
-### 2. Web server analysis
+### 2. Analiza serwera web
 ```bash
-# Monitor during load testing
+# Monitor podczas testów obciążenia
 ./run.sh monitor --duration 300
 ./run.sh analyze --dport 80 --charts timeline connections
 ./run.sh report
 ```
 
-### 3. Debugging specific application
+### 3. Debugging konkretnej aplikacji
 ```bash
-# Find application PID
+# Znajdź PID aplikacji
 pgrep nginx
 
-# Monitor only this application
+# Monitoruj tylko tę aplikację
 ./run.sh quick --duration 60
 ./run.sh analyze --pid 1234 --charts timeline connections
 ```
 
-### 4. SSH connection analysis
+### 4. Analiza połączeń SSH
 ```bash
 ./run.sh monitor --duration 120
 ./run.sh analyze --sport 22 --charts heatmap connections
 ```
 
-### 5. Database analysis
+### 5. Analiza bazy danych
 ```bash
 ./run.sh monitor --duration 180
 ./run.sh analyze --dport 3306  # MySQL
@@ -139,7 +139,7 @@ pgrep nginx
 ./run.sh report                # Comprehensive analysis
 ```
 
-### 6. Live monitoring during tests
+### 6. Live monitoring podczas testów
 ```bash
 # Terminal 1: Live monitoring
 ./run.sh live
@@ -148,57 +148,53 @@ pgrep nginx
 curl -o /dev/null http://your-server.com/large-file
 ```
 
-## 🔍 RESULTS INTERPRETATION
+## 🔍 INTERPRETACJA WYNIKÓW
 
-### CWND Values
-- **1-10**: 🟡 Connection start / after packet loss
+### Wartości CWND
+- **1-10**: 🟡 Start połączenia / po utracie pakietów
 - **10-50**: 🟢 Normalna praca 
 - **50-200**: 🔵 Optymalne wykorzystanie
-- **>200**: 🚀 Very fast connections
+- **>200**: 🚀 Bardzo szybkie połączenia
 
-### Chart patterns
-- **Sawtooth growth**: ✅ Cubic TCP in action  
-- **Sudden drops**: ⚠️ Packet losses
-- **Flat lines**: 📊 Bandwidth limitations
-- **Fast oscillations**: ⚡ Active flow control
+### Wzorce wykresów
+- **Piłokształtne wzrosty**: ✅ Cubic TCP w akcji  
+- **Nagłe spadki**: ⚠️ Straty pakietów
+- **Płaskie linie**: 📊 Ograniczenia przepustowości
+- **Szybkie oscylacje**: ⚡ Aktywne sterowanie przepływem
 
-### Chart files
-- `*_timeline.png`: 📈 Main time-based chart
-- `*_connections.png`: 🔗 Per-connection analysis  
-- `*_heatmap.png`: 🌡️ Activity heatmap
-- `*_timeline_interactive.html`: 🎯 Interactive chart (open in browser)
+### Pliki wykresów i raportów
+- `*_timeline.png`: 📈 Główny wykres zmian w czasie
+- `*_connections.png`: 🔗 Analiza per połączenie  
+- `*_heatmap.png`: 🌡️ Mapa aktywności
+- `*_timeline_interactive.html`: 🎯 Interaktywny wykres (otwórz w przeglądarce)
+- `tcp_analysis_*.html`: 📋 Comprehensive HTML report z wszystkimi danymi
 
-### Report files  
-- `*.html`: 📄 Comprehensive HTML reports with statistics and embedded charts
-- `*.json`: 🔧 Machine-readable reports for automation
-- `*.txt`: 📝 Plain text reports for command-line viewing
-
-## ⚠️ COMMON PROBLEMS AND SOLUTIONS
+## ⚠️ CZĘSTE PROBLEMY I ROZWIĄZANIA
 
 ### Problem: "Permission denied"
 ```bash
-# ❌ Error: Conflicting permissions
-# ✅ Solution: run.sh automatically handles permissions
+# ❌ Błąd: Conflicting permissions
+# ✅ Rozwiązanie: run.sh automatically handles permissions
 ./run.sh monitor --duration 30   # Handles sudo automatically
 ./run.sh analyze                 # Handles file permissions automatically
 ```
 
 ### Problem: "No module named 'pandas'"
 ```bash
-# ✅ Install system packages
+# ✅ Instalacja pakietów systemowych
 sudo apt install python3-pandas python3-matplotlib python3-seaborn python3-plotly
 
-# ✅ Use installation script
+# ✅ Użyj installation script
 ./install.sh
 ```
 
 ### Problem: "No data collected"
 ```bash
-# ✅ Check active TCP connections
+# ✅ Sprawdź aktywne połączenia TCP
 ss -tuln
 netstat -tlnp
 
-# ✅ Use longer monitoring time
+# ✅ Użyj dłuższego czasu monitoringu
 ./run.sh monitor --duration 120
 
 # ✅ Generuj ruch sieciowy
@@ -207,95 +203,98 @@ curl http://example.com &
 
 ### Problem: Puste foldery sesji
 ```bash
-# ✅ Clean empty sessions
+# ✅ Wyczyść puste sesje
 ./run.sh clean
 
-# ✅ Check if monitoring collected data
+# ✅ Sprawdź czy monitoring zbierał dane
 ./run.sh list
 ```
 
-### Problem: No charts
+### Problem: Brak wykresów
 ```bash
-# ✅ Check that analysis works
+# ✅ Sprawdź że analiza działa
 ./run.sh analyze --charts timeline
 
-# ✅ Check sessions
+# ✅ Sprawdź sesje
 ./run.sh list
 ```
 
-### Problem: Filters return 0 results
+### Problem: Filtry zwracają 0 wyników
 ```bash
-# ✅ Check available data
+# ✅ Sprawdź dostępne dane
 ./run.sh list
 
-# ✅ Check without filters first
-./run.sh analyze  # Without filters
+# ✅ Sprawdź bez filtrów najpierw
+./run.sh analyze  # Bez filtrów
 ```
 
-## 🛠️ DEBUG COMMANDS
+## 🛠️ KOMENDY DEBUG
 
-### Data checking
+### Sprawdzanie danych
 ```bash
-# List sessions
+# Lista sesji
 ./run.sh list
 
-# Analysis without filters
+# Analiza bez filtrów
 ./run.sh analyze
 
 # Comprehensive debug report
 ./run.sh report
 ```
 
-## 💡 PERFORMANCE TIPS
+## 💡 WSKAZÓWKI WYDAJNOŚCI
 
-### Monitoring time
-- **Quick diagnosis**: 15-30 seconds
-- **Performance analysis**: 2-5 minutes  
-- **Long-term analysis**: 10+ minutes
-- **Load testing**: Entire test duration
+### Czas monitoringu
+- **Szybka diagnoza**: 15-30 sekund
+- **Analiza wydajności**: 2-5 minut  
+- **Długoterminowa analiza**: 10+ minut
+- **Testy obciążenia**: Cały czas trwania testu
 
-### Data management
-- **Large datasets**: Use filters to focus analysis
-- **Multiple sessions**: Regularly clean empty sessions (`--clean`)
-- **Live monitoring**: Monitor during active network traffic
-- **Reports**: Use HTML for detailed analysis, TXT for quick overview
+### Zarządzanie danymi
+- **Duże zbiory danych**: Używaj filtrów do fokusowania analizy
+- **Wiele sesji**: Regularnie czyść puste sesje (`--clean`)
+- **Live monitoring**: Monitoruj podczas aktywnego ruchu sieciowego
+- **Raporty**: Używaj HTML dla szczegółowej analizy, TXT dla szybkiego przeglądu
 
-### Optimization
+### Optymalizacja
 ```bash
-# Quick analysis with timelines only
+# Szybka analiza tylko z timelinami
 ./run.sh analyze --charts timeline
 
-# Focus on specific traffic
+# Fokus na konkretny ruch
 ./run.sh analyze --dport 443 --charts connections
 
-# Analysis of latest session
-./run.sh analyze  # Automatically latest
+# Analiza najnowszej sesji
+./run.sh analyze  # Automatycznie najnowsze
 
 # Comprehensive report
 ./run.sh report
 ```
 
-## 📁 SESSION STRUCTURE
+## 📁 STRUKTURA SESJI
 
 ```
 out/session_20250911_143025/
-├── cwnd_log.csv                         # 📊 Raw TCP data
-├── analysis_20250911_143225_timeline.png       # 📈 First analysis
-├── analysis_20250911_143225_connections.png    # 🔗 Connection analysis
-├── analysis_20250911_143225_heatmap.png        # 🌡️ Heat map
-├── analysis_20250911_143225_timeline_interactive.html  # 🎯 Interactive
-├── analysis_20250911_145030_timeline.png       # 📈 Second analysis (filtered)
-└── analysis_20250911_145030_connections.png    # 🔗 Filtered analysis
+├── cwnd_log.csv                         # 📊 Surowe dane TCP
+├── charts/                              # 📁 Quick analysis results
+│   ├── chart_20250911_143225_timeline.png      # 📈 Timeline chart
+│   ├── chart_20250911_143225_connections.png   # 🔗 Connection analysis
+│   ├── chart_20250911_143225_heatmap.png       # 🌡️ Heatmap
+│   ├── chart_20250911_143225_timeline_interactive.html  # 🎯 Interactive
+│   └── tcp_analysis_20250911_143225.html       # 📋 Comprehensive HTML report
+├── analysis_20250911_145030/           # 📁 Additional analysis
+│   ├── chart_20250911_145030_timeline.png      # 📈 Filtered analysis
+│   └── chart_20250911_145030_connections.png   # 🔗 Filtered analysis
 ```
 
-**Each analysis has its own timestamp, so you can track the history of different analyses of the same session!**
+**Każda analiza ma swój timestamp, więc można śledzić historię różnych analiz tej samej sesji!**
 
 ---
 
 **TL;DR**: 
 - Monitor: `./run.sh monitor --duration 30`
-- Analyze: `./run.sh analyze --dport 443`  
-- All-in-one: `./run.sh quick --duration 30`
+- Analizuj: `./run.sh analyze --dport 443`  
+- All-in-one + HTML: `./run.sh quick --duration 30`
 - Report: `./run.sh report`
 
-**💡 Pro tip**: Use `./run.sh list` to see all available sessions! 🎯
+**💡 Pro tip**: Używaj `./run.sh list` żeby zobaczyć wszystkie dostępne sesje! HTML raporty znajdziesz w folderze `charts/` każdej sesji! 🎯

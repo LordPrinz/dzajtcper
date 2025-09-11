@@ -27,7 +27,7 @@ show_help() {
     echo -e "  ${GREEN}list${NC}                            List available sessions"
     echo -e "  ${GREEN}clean${NC}                           Clean empty sessions"
     echo -e "  ${GREEN}live${NC} [FILE]                     Live monitoring dashboard"
-    echo -e "  ${GREEN}quick${NC} [--duration SECONDS]      Monitor + analyze (recommended)"
+    echo -e "  ${GREEN}quick${NC} [--duration SECONDS]      Monitor + analyze + HTML report (recommended)"
     echo -e "  ${GREEN}report${NC} [FILE] [FORMAT]          Generate comprehensive report"
     echo ""
     echo -e "${YELLOW}ANALYSIS OPTIONS:${NC}"
@@ -114,22 +114,18 @@ case "$COMMAND" in
         ;;
         
     "quick")
-        echo -e "${GREEN}🚀 Quick start: Monitor + Analyze${NC}"
+        echo -e "${GREEN}🚀 Quick start: Monitor + Analyze + HTML Report${NC}"
         DURATION=60
         if [[ "$1" == "--duration" ]]; then
             DURATION="$2"
             shift 2
         fi
         
-        echo -e "${YELLOW}Step 1: Monitoring for $DURATION seconds...${NC}"
-        sudo ./tcp_monitor.py monitor --duration "$DURATION"
+        sudo ./tcp_monitor.py quick --duration "$DURATION" "$@"
         
         if [[ -d "out" ]]; then
             sudo chown -R "$USER:$USER" out/
         fi
-        
-        echo -e "${YELLOW}Step 2: Analyzing data...${NC}"
-        ./tcp_monitor.py analyze "$@"
         
         echo -e "${GREEN}✅ Quick analysis complete!${NC}"
         echo -e "${CYAN}Check out/ directory for results${NC}"

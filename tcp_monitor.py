@@ -14,8 +14,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 from src.data_loader import DataLoader
 from src.data_filter import DataFilter
 from src.visualizer import ChartGenerator
-from src.monitor import LiveMonitor
 from src.reporter import ReportGenerator
+from src.monitor import LiveMonitor
 
 
 class TCPMonitorCLI:
@@ -190,12 +190,12 @@ class TCPMonitorCLI:
         chart_gen = ChartGenerator(data)
         
         session_dir = self.log_manager.get_session_dir()
+        charts_dir = os.path.join(session_dir, "charts")
         
-        success = chart_gen.generate_all_charts("charts", "quick_analysis", session_dir)
+        success = chart_gen.generate_all_charts(charts_dir, "quick_analysis")
         
         if success:
-            charts_path = f"{session_dir}/charts" if session_dir else "charts/"
-            print(f"✓ Charts generated successfully in {charts_path}")
+            print(f"✓ Charts generated successfully in {charts_dir}")
         else:
             print("⚠ Some charts could not be generated")
         
@@ -203,12 +203,9 @@ class TCPMonitorCLI:
         reporter = ReportGenerator(self.csv_file)
         
         analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        analysis_dir = os.path.join(session_dir, f"analysis_{analysis_timestamp}")
         
-        if not os.path.exists(analysis_dir):
-            os.makedirs(analysis_dir)
-        
-        report_path = os.path.join(analysis_dir, f"quick_analysis_{analysis_timestamp}.html")
+        # Generate main analysis report in the same folder as charts
+        report_path = os.path.join(charts_dir, f"tcp_analysis_{analysis_timestamp}.html")
         reporter.save_report(report_path, 'html')
         print(f"✓ HTML report saved as: {report_path}")
         

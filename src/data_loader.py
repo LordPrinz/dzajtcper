@@ -42,7 +42,7 @@ class DataLoader:
             else:
                 df = pd.read_csv(self.csv_file)
             
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed')
             df = df.sort_values('timestamp')
             
             df['connection'] = (df['saddr'].astype(str) + ':' + df['sport'].astype(str) + 
@@ -89,7 +89,7 @@ class DataLoader:
                 new_data.columns = ['timestamp', 'pid', 'saddr', 'sport', 'daddr', 'dport', 'cwnd']
                 self.data = pd.concat([self.data, new_data], ignore_index=True)
             
-            self.data['timestamp'] = pd.to_datetime(self.data['timestamp'])
+            self.data['timestamp'] = pd.to_datetime(self.data['timestamp'], format='mixed')
             self.data['connection'] = (self.data['saddr'].astype(str) + ':' + 
                                      self.data['sport'].astype(str) + ' -> ' + 
                                      self.data['daddr'].astype(str) + ':' + 
@@ -157,7 +157,7 @@ class DataLoader:
             issues.append(f"Null values found: {null_counts[null_counts > 0].to_dict()}")
         
         try:
-            pd.to_datetime(self.data['timestamp'])
+            pd.to_datetime(self.data['timestamp'], format='mixed')
         except:
             issues.append("Invalid timestamp format")
         
