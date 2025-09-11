@@ -1,17 +1,17 @@
-#!/usr/bin/env python3
 import os
 import sys
 import socket
 import struct
 from datetime import datetime
 
-# Dodaj systemową ścieżkę dla BCC
 sys.path.insert(0, '/usr/lib/python3/dist-packages')
 from bcc import BPF
 
-# Ścieżka do pliku CSV w katalogu projektu
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-LOGFILE = os.path.join(SCRIPT_DIR, "cwnd_log.csv")
+if len(sys.argv) > 1:
+    LOGFILE = sys.argv[1]
+else:
+    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+    LOGFILE = os.path.join(SCRIPT_DIR, "cwnd_log.csv")
 
 def check_root():
     if os.geteuid() != 0:
@@ -19,8 +19,6 @@ def check_root():
         sys.exit(1)
 
 bpf_program = r"""
-#include <uapi/linux/ptrace.h>
-#include <uapi/linux/tcp.h>
 
 struct data_t {
     u32 pid;
@@ -54,7 +52,6 @@ def inet_ntoa(addr):
     return socket.inet_ntop(socket.AF_INET, struct.pack("I", addr))
 
 def init_log():
-    # Jeśli plik nie istnieje, dodaj nagłówek CSV
     if not os.path.exists(LOGFILE):
         with open(LOGFILE, "w") as f:
             f.write("timestamp,pid,saddr,sport,daddr,dport,cwnd\n")
@@ -69,11 +66,9 @@ def print_event(cpu, data, size):
         f"{inet_ntoa(ev.daddr)},{ev.dport},"
         f"{ev.snd_cwnd}"
     )
-    # wypisz na konsolę
     print(f"{ts}  PID {ev.pid:>5}  "
           f"{inet_ntoa(ev.saddr)}:{ev.sport:>5} -> "
           f"{inet_ntoa(ev.daddr)}:{ev.dport:>5}   cwnd={ev.snd_cwnd}")
-    # zapisz do pliku
     with open(LOGFILE, "a") as f:
         f.write(line + "\n")
 
