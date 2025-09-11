@@ -15,7 +15,7 @@ else:
 
 def check_root():
     if os.geteuid() != 0:
-        print("[ERROR] Ten skrypt wymaga uprawnień roota.")
+        print("[ERROR] This script requires root privileges.")
         sys.exit(1)
 
 bpf_program = r"""
@@ -80,12 +80,12 @@ def main():
     b = BPF(text=bpf_program)
     b["events"].open_perf_buffer(print_event)
 
-    print(f"Śledzenie tcp_probe (cwnd)... (Ctrl+C aby zakończyć)\nLog zapisuje się do {LOGFILE}\n")
+    print(f"Tracing tcp_probe (cwnd)... (Ctrl+C to stop)\nLog saving to {LOGFILE}\n")
     try:
         while True:
             b.perf_buffer_poll()
     except KeyboardInterrupt:
-        print("\nZakończono monitorowanie.")
+        print("\nMonitoring stopped.")
 
 if __name__ == "__main__":
     main()

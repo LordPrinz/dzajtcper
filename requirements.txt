@@ -1,2 +1,2 @@
-# BCC jest zainstalowane systemowo jako python3-bpfcc
-# Brak dodatkowych pakietów Python wymaganych
+# BCC is installed system-wide as python3-bpfcc
+# No additional Python packages required

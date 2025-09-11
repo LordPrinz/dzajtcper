@@ -1,121 +1,121 @@
-# DZAJTCPER - Przewodnik użytkownika
+# DZAJTCPER - User Guide
 
-## Opis
-# 🚀 Co to jest DZAJTCPER?
+## Description
+# 🚀 What is DZAJTCPER?
 
-DZAJTCPER to zaawansowane narzędzie do monitorowania okna przesyłania (congestion window) z algorytmu Cubic bezpośrednio z jądra Linux za pomocą eBPF. Program oferuje unified command interface przez single `./run.sh` script z automatycznym zarządzaniem uprawnieniami.
+DZAJTCPER is an advanced tool for monitoring the congestion window from the Cubic algorithm directly from the Linux kernel using eBPF. The program offers a unified command interface through a single `./run.sh` script with automatic permission management.
 
-## Wymagania systemowe
-- **System**: Linux z jądrem obsługującym eBPF (>= 4.7)
-- **Pakiety systemowe**: `python3-bpfcc` (dla eBPF)
-- **Uprawnienia**: Automatycznie obsługiwane przez `./run.sh`
-- **Python**: Wersja 3.7+
+## System Requirements
+- **System**: Linux with eBPF-supporting kernel (>= 4.7)
+- **System packages**: `python3-bpfcc` (for eBPF)
+- **Permissions**: Automatically handled by `./run.sh`
+- **Python**: Version 3.7+
 
-## Instalacja i konfiguracja
+## Installation and Configuration
 
-### 1. Szybka instalacja
+### 1. Quick Installation
 ```bash
-# Wykonaj skrypt instalacyjny
+# Run installation script
 ./install.sh
 ```
 
-### 2. Ręczna instalacja
+### 2. Manual Installation
 ```bash
-# Instalacja pakietów systemowych
+# System package installation
 sudo apt update
 sudo apt install python3-bpfcc python3-venv python3-pip
 sudo apt install python3-pandas python3-matplotlib python3-seaborn python3-plotly python3-numpy
 
-# Setup projektu
+# Project setup
 chmod +x *.py *.sh
 ```
 
-## Sposoby uruchamiania
+## Usage Methods
 
-### 🚀 METODA 1: Szybki start (Rekomendowana)
-Wszystko w jednej komendzie - monitoring + analiza + wykresy:
+### 🚀 METHOD 1: Quick Start (Recommended)
+Everything in one command - monitoring + analysis + charts:
 
 ```bash
-# Podstawowe użycie (60 sekund monitoring)
+# Basic usage (60 seconds monitoring)
 ./run.sh quick
 
-# Monitoring przez określony czas
+# Monitoring for specified time
 ./run.sh quick --duration 30
 
-# Przykłady różnych czasów
-./run.sh quick --duration 15   # 15 sekund
-./run.sh quick --duration 120  # 2 minuty
+# Examples of different times
+./run.sh quick --duration 15   # 15 seconds
+./run.sh quick --duration 120  # 2 minutes
 ```
 
-**Wynik**: Program automatycznie:
-- Zbiera dane przez określony czas (z automatycznym sudo)
-- Analizuje zebraną zawartość (z automatycznym zarządzaniem uprawnieniami)
-- Generuje wykresy w session directory
-- Zapisuje dane w out/session_TIMESTAMP/
+**Result**: Program automatically:
+- Collects data for specified time (with automatic sudo)
+- Analyzes collected content (with automatic permission management)
+- Generates charts in session directory
+- Saves data in out/session_TIMESTAMP/
 
-### 📊 METODA 2: Etapowe podejście
+### 📊 METHOD 2: Step-by-step Approach
 
-#### Krok 1: Monitoring
+#### Step 1: Monitoring
 ```bash
-# Podstawowy monitoring (60 sekund)
+# Basic monitoring (60 seconds)
 ./run.sh monitor
 
-# Monitoring z określonym czasem
+# Monitoring with specified time
 ./run.sh monitor --duration 30
 ```
 
-#### Krok 2: Analiza zebranych danych
+#### Step 2: Analysis of collected data
 ```bash
-# Analiza najnowszej sesji
+# Analyze latest session
 ./run.sh analyze
 
-# Analiza konkretnej sesji
+# Analyze specific session
 ./run.sh analyze session_20250911_143025
 
-# Analiza z filtrowaniem
+# Analysis with filtering
 ./run.sh analyze --pid 1234
 ./run.sh analyze --saddr 192.168.1.100
 ./run.sh analyze --cwnd-min 50 --cwnd-max 200
 ```
 
-### � METODA 3: Comprehensive reporting
-Generowanie komprehensywnych raportów:
+### 📋 METHOD 3: Comprehensive reporting
+Generating comprehensive reports:
 
 ```bash
-# Raport z najnowszej sesji
+# Report from latest session
 ./run.sh report
 
-# Raport z konkretnej sesji
+# Report from specific session
 ./run.sh report session_20250911_143025
 
-# Raport z custom nazwą
+# Report with custom name
 ./run.sh report session_20250911_143025 custom_analysis.html
 ```
 
-### � METODA 4: Live monitoring
-Monitoring na żywo z określonym czasem:
+### ⚡ METHOD 4: Live monitoring
+Live monitoring with specified time:
 
 ```bash
-# Live monitoring przez 60 sekund
+# Live monitoring for 60 seconds
 ./run.sh live --duration 60
 
-### 🔧 METODA 5: Zarządzanie sesjami
+### 🔧 METHOD 5: Session Management
 
-#### Lista sesji
+#### Session List
 ```bash
-# Pokaż wszystkie dostępne sesje
+# Show all available sessions
 ./run.sh list
 ```
 
-#### Czyszczenie
+#### Cleanup
 ```bash
-# Usuń puste sesje
+# Remove empty sessions
 ./run.sh clean
 ```
 
-## Zarządzanie sesjami
+## Session Management
 
-### Struktura unified session directory
+### Unified session directory structure
 ```
 out/
 ├── session_20250911_143025/
@@ -131,53 +131,53 @@ out/
 
 ### Session commands
 ```bash
-# Lista wszystkich sesji
+# List all sessions
 ./run.sh list
 
-# Czyszczenie pustych sesji  
+# Clean empty sessions  
 ./run.sh clean
 
-# Analiza konkretnej sesji
+# Analysis of specific session
 ./run.sh analyze session_20250911_143025
 
-# Raport z konkretnej sesji
+# Report from specific session
 ./run.sh report session_20250911_143025
 ```
 
-## Rodzaje generowanych wykresów
+## Types of Generated Charts
 
-1. **Timeline** (`*_timeline.png`) - Zmiana CWND w czasie dla każdego połączenia
-2. **Connections** (`*_connections.png`) - Analiza per połączenie
-3. **Heatmap** (`*_heatmap.png`) - Mapa ciepła aktywności  
-4. **Overview** (`*_overview.png`) - Statystyki podsumowujące
-5. **Interactive** (`*_timeline_interactive.html`) - Interaktywny wykres w przeglądarce
+1. **Timeline** (`*_timeline.png`) - CWND change over time for each connection
+2. **Connections** (`*_connections.png`) - Per-connection analysis
+3. **Heatmap** (`*_heatmap.png`) - Activity heatmap  
+4. **Overview** (`*_overview.png`) - Summary statistics
+5. **Interactive** (`*_timeline_interactive.html`) - Interactive chart in browser
 
-## Przykłady użycia
+## Usage Examples
 
-### Scenariusz 1: Szybka diagnoza
+### Scenario 1: Quick Diagnosis
 ```bash
-# 30 sekund monitoringu z automatyczną analizą
+# 30 seconds monitoring with automatic analysis
 ./run.sh quick --duration 30
-# Sprawdź wyniki w out/session_*/
+# Check results in out/session_*/
 ```
 
-### Scenariusz 2: Długi monitoring konkretnego procesu
+### Scenario 2: Long monitoring of specific process
 ```bash
-# Zbieranie danych przez 10 minut
+# Collect data for 10 minutes
 ./run.sh monitor --duration 600
 
-# Analiza z filtrowaniem dla konkretnego PID
+# Analysis with filtering for specific PID
 ./run.sh analyze --pid 1234 --charts timeline connections
 ```
 
-### Scenariusz 3: Comprehensive analysis z raportem
+### Scenario 3: Comprehensive analysis with report
 ```bash
-# Monitor i generate comprehensive report
+# Monitor and generate comprehensive report
 ./run.sh monitor --duration 300
 ./run.sh report  # Generate HTML report
 ```
 
-### Scenariusz 4: Analiza połączeń sieciowych
+### Scenario 4: Network connections analysis
 ```bash
 # Monitor specific network traffic
 ./run.sh monitor --duration 120
@@ -186,267 +186,248 @@ out/
 ./run.sh analyze --dport 443 --charts timeline heatmap
 ```
 
-## Opcje filtrowania
+## Filtering Options
 
-### Filtry dostępne w analizie:
-- `--pid PID` - Konkretny proces
-- `--saddr IP` - Źródłowy adres IP  
-- `--daddr IP` - Docelowy adres IP
-- `--sport PORT` - Port źródłowy
-- `--dport PORT` - Port docelowy
-- `--cwnd-min VALUE` - Minimalna wartość CWND
-- `--cwnd-max VALUE` - Maksymalna wartość CWND
+### Filters available in analysis:
+- `--pid PID` - Specific process
+- `--saddr IP` - Source IP address  
+- `--daddr IP` - Destination IP address
+- `--sport PORT` - Source port
+- `--dport PORT` - Destination port
+- `--cwnd-min VALUE` - Minimum CWND value
+- `--cwnd-max VALUE` - Maximum CWND value
 
-### Przykłady filtrowania:
+### Filtering Examples:
 ```bash
-# Tylko SSH connections (port 22)
+# Only SSH connections (port 22)
 ./run.sh analyze --dport 22
 
-# CWND powyżej 50
+# CWND above 50
 ./run.sh analyze --cwnd-min 50
 
-# Konkretny host
-# Kombinowane filtry
+# Specific host
+# Combined filters
 ./run.sh analyze --dport 443 --cwnd-min 20 --charts timeline connections
 ```
 
-## Rozwiązywanie problemów
+## Troubleshooting
 
 ### Problem: Permission conflicts
 ```bash
-# run.sh automatycznie obsługuje uprawnienia
+# run.sh automatically handles permissions
 ./run.sh monitor --duration 30  # Auto-sudo + permission fixing
 ./run.sh analyze                # Auto permission handling
 ```
 
 ### Problem: "ModuleNotFoundError: No module named 'pandas'"
 ```bash
-# Reinstaluj systemowe pakiety Python
+# Reinstall system Python packages
 sudo apt install python3-pandas python3-matplotlib python3-seaborn python3-plotly
 
-# Lub użyj installation script
+# Or use installation script
 ./install.sh
 ```
 
 ### Problem: "No data collected"
 ```bash
-# Sprawdź czy masz aktywne połączenia TCP
+# Check if you have active TCP connections
 ss -tuln
 
-# Spróbuj dłuższego czasu monitorowania
+# Try longer monitoring time
 ./run.sh monitor --duration 120
 ```
 
-### Problem: Puste sesje
+### Problem: Empty sessions
 ```bash
-# Wyczyść puste sesje
+# Clean empty sessions
 ./run.sh clean
 
-# Sprawdź dostępne sesje
+# Check available sessions
 ./run.sh list
 ```
 
-## Interpretacja wyników
+## Results Interpretation
 
-### Wartości CWND
-- **Małe wartości (1-10)**: Początek połączenia lub po stracie pakietów
-- **Średnie wartości (10-100)**: Normalna praca algorytmu Cubic  
-- **Duże wartości (>100)**: Optymalne wykorzystanie przepustowości
+### CWND Values
+- **Small values (1-10)**: Connection start or after packet loss
+- **Medium values (10-100)**: Normal Cubic algorithm operation  
+- **Large values (>100)**: Optimal bandwidth utilization
 
-### Wzorce w wykresach
-- **Wzrost piłokształtny**: Charakterystyczny dla Cubic TCP
-- **Nagłe spadki**: Wykryte straty pakietów
-- **Plateau**: Ograniczenie przez odbiorcę (rwnd) lub sieć
+### Chart Patterns
+- **Sawtooth growth**: Characteristic of Cubic TCP
+- **Sudden drops**: Detected packet losses
+- **Plateau**: Receiver (rwnd) or network limitation
 
-## Wskazówki optymalizacji
+## Optimization Tips
 
-### Dla długotrwałego monitoringu:
+### For long-term monitoring:
 ```bash
-# Użyj większych interwałów przy długim czasie
-./run.sh monitor --duration 3600  # 1 godzina
+# Use larger intervals for long time periods
+./run.sh monitor --duration 3600  # 1 hour
 ```
 
-### Dla analizy wydajności:
+### For performance analysis:
 ```bash
-# Skup się na połączeniach o wysokim CWND
+# Focus on high CWND connections
 ./run.sh analyze --cwnd-min 50 --charts timeline
 
 # Generate comprehensive report
 ./run.sh report
 ```
 
-### Dla debugowania sieci:
+### For network debugging:
 ```bash
-# Live monitoring określonego czasu
+# Live monitoring for specified time
 ./run.sh live --duration 300
 ```
 
-## Struktura danych wyjściowych
+## Output Data Structure
 
-### Format CSV:
+### CSV Format:
 ```
 timestamp,pid,saddr,sport,daddr,dport,cwnd,connection
 2025-01-01T12:00:00.123456,1234,192.168.1.1,12345,192.168.1.2,80,42,192.168.1.1:12345->192.168.1.2:80
 ```
 
-### Kolumny:
-- `timestamp`: Czas zdarzenia (ISO format)
-- `pid`: ID procesu (0 dla jądra)
-- `saddr`: Źródłowy adres IP
-- `sport`: Port źródłowy  
-- `daddr`: Docelowy adres IP
-- `dport`: Port docelowy
-- `cwnd`: Wartość congestion window
-- `connection`: String identyfikujący połączenie
+### Columns:
+- `timestamp`: Event time (ISO format)
+- `pid`: Process ID (0 for kernel)
+- `saddr`: Source IP address
+- `sport`: Source port  
+- `daddr`: Destination IP address
+- `dport`: Destination port
+- `cwnd`: Congestion window value
+- `connection`: String identifying connection
 
-## Dostępne komendy - podsumowanie
+## Available Commands - Summary
 
-| Komenda | Opis | Przykład |
-|---------|------|----------|
+| Command | Description | Example |
+|---------|-------------|---------|
 | `./run.sh monitor` | eBPF monitoring | `./run.sh monitor --duration 60` |
-| `./run.sh analyze` | Analiza danych | `./run.sh analyze --dport 443` |
+| `./run.sh analyze` | Data analysis | `./run.sh analyze --dport 443` |
 | `./run.sh live` | Live monitoring | `./run.sh live --duration 60` |
-| `./run.sh quick` | Monitor + analiza | `./run.sh quick --duration 30` |
+| `./run.sh quick` | Monitor + analysis | `./run.sh quick --duration 30` |
 | `./run.sh report` | Comprehensive report | `./run.sh report` |
-| `./run.sh list` | Lista sesji | `./run.sh list` |
-| `./run.sh clean` | Usuń puste sesje | `./run.sh clean` |
+| `./run.sh list` | List sessions | `./run.sh list` |
+| `./run.sh clean` | Remove empty sessions | `./run.sh clean` |
 
 ---
 
-## Przykład kompletnego workflow
+## Complete Workflow Example
 
 ```bash
-# 1. Szybka analiza (najprostsze)
+# 1. Quick analysis (simplest)
 ./run.sh quick --duration 60
 
-# 2. Sprawdzenie wyników w session directory
+# 2. Check results in session directory
 ./run.sh list
 
 # 3. Generate comprehensive report
 ./run.sh report
 
-# 4. Otworzenie interaktywnego wykresu
+# 4. Open interactive chart
 firefox out/session_*/*_interactive.html
 
-# 5. Dla głębszej analizy konkretnego procesu
+# 5. For deeper analysis of specific process
 ./run.sh monitor --duration 300
 ./run.sh analyze --pid $(pgrep nginx) --charts timeline connections
 
-# 6. Live monitoring podczas testów
+# 6. Live monitoring during tests
 ./run.sh live --duration 180
-# Uruchom swoje testy sieciowe w innym terminalu
-```
+# Run your network tests in another terminal
 ```
 
-## Rozwiązywanie problemów
+## Troubleshooting
 
-### Problem: "Permission denied" lub "Operation not permitted"
+### Problem: "Permission denied" or "Operation not permitted"
 ```bash
-# Upewnij się, że używasz sudo
+# Make sure you use sudo
 sudo ./run.sh quick --duration 30
 ```
 
 ### Problem: "ModuleNotFoundError: No module named 'pandas'"
 ```bash
-# Reinstaluj systemowe pakiety Python
+# Reinstall system Python packages
 sudo apt install python3-pandas python3-matplotlib python3-seaborn python3-plotly
 ```
 
 ### Problem: "No data collected"
 ```bash
-# Sprawdź czy masz aktywne połączenia TCP
+# Check if you have active TCP connections
 ss -tuln
 
-# Spróbuj dłuższego czasu monitorowania
+# Try longer monitoring time
 sudo ./run.sh quick --duration 60
 ```
 
-### Problem: Brak wykresów
+### Problem: No charts
 ```bash
-# Sprawdź czy istnieją sesje z wynikami
+# Check if sessions with results exist
 ls -la out/session_*/
 
-# Sprawdź czy w sesji są wygenerowane wykresy
+# Check if charts are generated in session
 ls -la out/session_*/*.html out/session_*/*.png
 ```
 
-## Interpretacja wyników
+## Results Interpretation
 
-### Wartości CWND
-- **Małe wartości (1-10)**: Początek połączenia lub po stracie pakietów
-- **Średnie wartości (10-100)**: Normalna praca algorytmu Cubic  
-- **Duże wartości (>100)**: Optymalne wykorzystanie przepustowości
+### CWND Values
+- **Small values (1-10)**: Connection start or after packet loss
+- **Medium values (10-100)**: Normal Cubic algorithm operation  
+- **Large values (>100)**: Optimal bandwidth utilization
 
-### Wzorce w wykresach
-- **Wzrost piłokształtny**: Charakterystyczny dla Cubic TCP
-- **Nagłe spadki**: Wykryte straty pakietów
-- **Plateau**: Ograniczenie przez odbiorcę (rwnd) lub sieć
+### Chart Patterns
+- **Sawtooth growth**: Characteristic of Cubic TCP
+- **Sudden drops**: Detected packet losses
+- **Plateau**: Receiver (rwnd) or network limitation
 
-## Wskazówki optymalizacji
+## Optimization Tips
 
-### Dla długotrwałego monitoringu:
+### For long-term monitoring:
 ```bash
-# Użyj większych interwałów przy długim czasie
-sudo ./run.sh monitor --duration 3600  # 1 godzina
+# Use larger intervals for long time periods
+sudo ./run.sh monitor --duration 3600  # 1 hour
 ```
 
-### Dla analizy wydajności:
+### For performance analysis:
 ```bash
-# Skup się na połączeniach o wysokim CWND
+# Focus on high CWND connections
 sudo ./run.sh analyze --min-cwnd 50 --charts
 ```
 
-### Dla debugowania sieci:
+### For network debugging:
 ```bash
-# Monitoruj konkretne połączenia
+# Monitor specific connections
 sudo ./run.sh live --saddr YOUR_SERVER_IP
 ```
 
-## Struktura danych wyjściowych
+## Keyboard Shortcuts in Live Mode
 
-### Format CSV:
-```
-timestamp,pid,saddr,sport,daddr,dport,cwnd,connection
-2025-01-01T12:00:00.123456,1234,192.168.1.1,12345,192.168.1.2,80,42,192.168.1.1:12345->192.168.1.2:80
-```
-
-### Kolumny:
-- `timestamp`: Czas zdarzenia (ISO format)
-- `pid`: ID procesu (0 dla jądra)
-- `saddr`: Źródłowy adres IP
-- `sport`: Port źródłowy  
-- `daddr`: Docelowy adres IP
-- `dport`: Port docelowy
-- `cwnd`: Wartość congestion window
-- `connection`: String identyfikujący połączenie
-
-## Skróty klawiszowe w trybie live
-
-- `Ctrl+C`: Zatrzymanie monitoringu
-- Program automatycznie przewija wyniki w terminalu
+- `Ctrl+C`: Stop monitoring
+- Program automatically scrolls results in terminal
 
 ---
 
-## Przykład kompletnego workflow
+## Complete Workflow Example
 
 ```bash
-# 1. Szybka analiza (najprostsze)
+# 1. Quick analysis (simplest)
 sudo ./run.sh quick --duration 60
 
-# 2. Sprawdzenie wyników  
+# 2. Check results  
 ls out/session_*/
 
-# 3. Otworzenie interaktywnego wykresu
+# 3. Open interactive chart
 firefox out/session_*/*_interactive.html
 
-# 4. Dla głębszej analizy konkretnego procesu
+# 4. For deeper analysis of specific process
 sudo ./run.sh monitor --duration 300
 sudo ./run.sh analyze --pid $(pgrep nginx) --charts
 
-# 5. Monitoring na żywo podczas testów
+# 5. Live monitoring during tests
 sudo ./run.sh live &
-# Uruchom swoje testy sieciowe
-# Ctrl+C aby zatrzymać
+# Run your network tests
+# Ctrl+C to stop
 ```
 
-To narzędzie daje pełną kontrolę nad monitoringiem TCP CWND z elastycznymi opcjami analizy i wizualizacji!
+This tool provides full control over TCP CWND monitoring with flexible analysis and visualization options!
