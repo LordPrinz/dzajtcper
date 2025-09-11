@@ -4,19 +4,14 @@ Generates various types of charts and visualizations for TCP CWND data
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import seaborn as sns
 import pandas as pd
-import numpy as np
 import os
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import Optional
 
 try:
-    import plotly.graph_objects as go
     import plotly.express as px
-    from plotly.subplots import make_subplots
-    import plotly.offline as pyo
     PLOTLY_AVAILABLE = True
 except ImportError:
     PLOTLY_AVAILABLE = False

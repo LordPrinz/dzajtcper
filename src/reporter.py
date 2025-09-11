@@ -4,13 +4,11 @@ Provides comprehensive analysis and reporting capabilities for TCP CWND data
 """
 
 import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 from data_loader import DataLoader
 from data_filter import DataFilter
-from visualizer import ChartGenerator
 
 
 class ReportGenerator:
@@ -272,13 +270,13 @@ class ReportGenerator:
             <title>TCP CWND Analysis Report</title>
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 20px; }}
-                .header {{ background-color:
-                .section {{ margin: 20px 0; padding: 15px; border: 1px solid
+                .header {{ background-color: #f0f8ff; padding: 20px; border-radius: 8px; }}
+                .section {{ margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }}
                 .metric {{ margin: 10px 0; }}
-                .value {{ font-weight: bold; color:
+                .value {{ font-weight: bold; color: #2c5aa0; }}
                 table {{ width: 100%; border-collapse: collapse; margin: 10px 0; }}
-                th, td {{ border: 1px solid
-                th {{ background-color:
+                th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+                th {{ background-color: #f2f2f2; }}
             </style>
         </head>
         <body>

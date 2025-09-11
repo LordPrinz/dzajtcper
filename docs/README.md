@@ -161,6 +161,20 @@ out/
 ./run.sh analyze
 ```
 
+### Quick Start (All-in-One)
+
+```bash
+# Quick monitoring: collect data + analyze + generate HTML report
+./run.sh quick --duration 60
+
+# What Quick Start does:
+# 1. Monitors TCP connections for specified duration (default: 60s)
+# 2. Automatically analyzes collected data  
+# 3. Generates overview charts (timeline, connections, heatmap)
+# 4. Creates comprehensive HTML report
+# 5. Shows quick statistics summary
+```
+
 ### Report Generation
 
 ```bash
@@ -196,7 +210,7 @@ out/
 | `monitor` | Start eBPF monitoring | `./run.sh monitor --duration 60` |
 | `analyze` | Analyze existing data | `./run.sh analyze --dport 443` |
 | `live` | Live monitoring dashboard | `./run.sh live --duration 60` |
-| `quick` | Monitor + analyze | `./run.sh quick --duration 30` |
+| `quick` | Monitor + analyze + HTML report | `./run.sh quick --duration 30` |
 | `report` | Generate comprehensive report | `./run.sh report` |
 | `list` | List all sessions | `./run.sh list` |
 | `clean` | Clean empty sessions | `./run.sh clean` |

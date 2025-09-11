@@ -7,8 +7,7 @@ Unified command-line interface for TCP congestion window monitoring and analysis
 import argparse
 import sys
 import os
-import signal
-from pathlib import Path
+from datetime import datetime
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
@@ -187,7 +186,7 @@ class TCPMonitorCLI:
         data = loader.get_data()
         print(f"Analyzed {len(data)} records from {data['connection'].nunique()} connections")
         
-        print("\nStep 3/3: Generating overview charts...")
+        print("\nStep 3/4: Generating overview charts...")
         chart_gen = ChartGenerator(data)
         
         session_dir = self.log_manager.get_session_dir()
@@ -199,6 +198,19 @@ class TCPMonitorCLI:
             print(f"✓ Charts generated successfully in {charts_path}")
         else:
             print("⚠ Some charts could not be generated")
+        
+        print("\nStep 4/4: Generating HTML report...")
+        reporter = ReportGenerator(self.csv_file)
+        
+        analysis_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        analysis_dir = os.path.join(session_dir, f"analysis_{analysis_timestamp}")
+        
+        if not os.path.exists(analysis_dir):
+            os.makedirs(analysis_dir)
+        
+        report_path = os.path.join(analysis_dir, f"quick_analysis_{analysis_timestamp}.html")
+        reporter.save_report(report_path, 'html')
+        print(f"✓ HTML report saved as: {report_path}")
         
         print("\n=== QUICK STATISTICS ===")
         print(f"Total Records: {len(data):,}")

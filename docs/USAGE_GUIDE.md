@@ -51,6 +51,7 @@ Everything in one command - monitoring + analysis + charts:
 - Collects data for specified time (with automatic sudo)
 - Analyzes collected content (with automatic permission management)
 - Generates charts in session directory
+- Creates comprehensive HTML report
 - Saves data in out/session_TIMESTAMP/
 
 ### 📊 METHOD 2: Step-by-step Approach
@@ -306,7 +307,7 @@ timestamp,pid,saddr,sport,daddr,dport,cwnd,connection
 | `./run.sh monitor` | eBPF monitoring | `./run.sh monitor --duration 60` |
 | `./run.sh analyze` | Data analysis | `./run.sh analyze --dport 443` |
 | `./run.sh live` | Live monitoring | `./run.sh live --duration 60` |
-| `./run.sh quick` | Monitor + analysis | `./run.sh quick --duration 30` |
+| `./run.sh quick` | Monitor + analysis + HTML report | `./run.sh quick --duration 30` |
 | `./run.sh report` | Comprehensive report | `./run.sh report` |
 | `./run.sh list` | List sessions | `./run.sh list` |
 | `./run.sh clean` | Remove empty sessions | `./run.sh clean` |

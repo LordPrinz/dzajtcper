@@ -26,7 +26,7 @@
 | `monitor` | 🎯 eBPF monitoring | `./run.sh monitor --duration 60` |
 | `analyze` | 📊 Data analysis | `./run.sh analyze --dport 443` |
 | `live` | 📺 Live monitoring | `./run.sh live --duration 60` |
-| `quick` | ⚡ Monitor + analysis | `./run.sh quick --duration 30` |
+| `quick` | ⚡ Monitor + analysis + HTML report | `./run.sh quick --duration 30` |
 | `report` | 📄 Comprehensive report | `./run.sh report` |
 | `list` | 📋 List sessions | `./run.sh list` |
 | `clean` | 🧹 Remove empty sessions | `./run.sh clean` |
@@ -167,6 +167,11 @@ curl -o /dev/null http://your-server.com/large-file
 - `*_connections.png`: 🔗 Per-connection analysis  
 - `*_heatmap.png`: 🌡️ Activity heatmap
 - `*_timeline_interactive.html`: 🎯 Interactive chart (open in browser)
+
+### Report files  
+- `*.html`: 📄 Comprehensive HTML reports with statistics and embedded charts
+- `*.json`: 🔧 Machine-readable reports for automation
+- `*.txt`: 📝 Plain text reports for command-line viewing
 
 ## ⚠️ COMMON PROBLEMS AND SOLUTIONS
 

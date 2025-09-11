@@ -4,14 +4,11 @@ Provides real-time monitoring capabilities with live data updates and visualizat
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import time
 import pandas as pd
 from datetime import datetime
-from typing import Optional, Callable
+from typing import Callable
 from data_loader import DataLoader
-from visualizer import ChartGenerator
-
 
 class LiveMonitor:
     """Handles real-time monitoring and visualization of TCP CWND data"""
@@ -31,7 +28,6 @@ class LiveMonitor:
         self.update_interval = update_interval
         self.data_loader = DataLoader(csv_file)
         self.is_running = False
-        self.animation = None
         self.fig = None
         self.ax = None
         
