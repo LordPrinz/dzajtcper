@@ -95,7 +95,17 @@ class ChartGenerator:
         
         distinct_colors = [
             '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-            '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+            '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
+            '#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00',
+            '#ffff33', '#a65628', '#f781bf', '#999999', '#8dd3c7',
+            '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462',
+            '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd', '#ccebc5',
+            '#ffed6f', '#393b79', '#637939', '#8c6d31', '#843c39',
+            '#7b4173', '#3182bd', '#31a354', '#e7969c', '#e7ba52',
+            '#ad494a', '#a55194', '#9c9ede', '#cedb9c', '#e7cb94',
+            '#de9ed6', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896',
+            '#c5b0d5', '#c49c94', '#f7b6d2', '#c7c7c7', '#dbdb8d',
+            '#9edae5'
         ]
         
         for i, conn in enumerate(connections):
