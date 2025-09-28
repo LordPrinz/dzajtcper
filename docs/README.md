@@ -1,4 +1,4 @@
-# DZAJTCPER - TCP CWND Monitor & Analyzer
+<img width="468" height="21" alt="image" src="https://github.com/user-attachments/assets/1dd507f7-d4ed-4268-b01d-9fa9a62ee543" /># DZAJTCPER - TCP CWND Monitor & Analyzer
 
 Comprehensive TCP congestion window monitoring and analysis toolkit using eBPF for kernel-level monitoring with advanced filtering, visualization, and reporting capabilities.
 
@@ -46,6 +46,13 @@ git clone <repository>
 cd dzajtcper
 chmod +x *.py *.sh
 ```
+
+## 📷 Screenshots
+
+<img width="432" height="200" alt="image" src="https://github.com/user-attachments/assets/d817e10f-9887-4cb2-88d7-5e6af1b9c31d" />
+<img width="386" height="199" alt="image" src="https://github.com/user-attachments/assets/e0f171f4-42ff-4ecd-9055-ea2eeeb497f6" />
+<img width="432" height="358" alt="image" src="https://github.com/user-attachments/assets/5cbe91af-22cb-4fe8-aa92-fee38a82e8a1" />
+
 
 ## 📁 Session Management
 
