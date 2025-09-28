@@ -1,4 +1,4 @@
-<img width="468" height="21" alt="image" src="https://github.com/user-attachments/assets/1dd507f7-d4ed-4268-b01d-9fa9a62ee543" /># DZAJTCPER - TCP CWND Monitor & Analyzer
+# DZAJTCPER - TCP CWND Monitor & Analyzer
 
 Comprehensive TCP congestion window monitoring and analysis toolkit using eBPF for kernel-level monitoring with advanced filtering, visualization, and reporting capabilities.
 
